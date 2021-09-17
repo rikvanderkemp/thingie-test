@@ -2,7 +2,7 @@
 name: CI
 
 on:
-  pull_request:
+  push:
     branches: [ master ]
 
 jobs:
@@ -18,11 +18,15 @@ jobs:
       run: echo "SHORT_TAG=${GITHUB_SHA::8}" >> $GITHUB_ENV
 
     - name: Docker build
-      run: docker build . -t bla:${{ env.SHORT_TAG }}
-
+      run: docker build . -t bla:latest
 
   use:
     runs-on: ubuntu-latest
+    name: "Try artifact"
+    needs: build
+    
+    steps:
+    - uses: actions/checkout@v2
 
-    name: "Hello?"
-    run: docker run  --rm -it -e IMAGE=bla:${{ env.SHORT_TAG }}
+    - name: Run it
+      run: docker run --rm bla:latest ls

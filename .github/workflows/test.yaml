@@ -34,5 +34,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+
+    - name: Download image
+      uses: ishworkh/docker-image-artifact-download@v1
+      with:
+        image: "prod_image:latest"
+
     - name: Run it
-      run: docker run --rm action_image_artifact_prod_image_latest ls
+      run: docker run --rm prod_image:latest ls

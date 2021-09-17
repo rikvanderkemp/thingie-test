@@ -63,3 +63,20 @@ jobs:
 
     - name: Run it
       run: docker run --rm prod_image:latest ls
+
+  use2:
+    runs-on: ubuntu-latest
+    name: "Try artifact again"
+    needs: build
+    
+    steps:
+    - uses: actions/checkout@v2
+
+
+    - name: Download image
+      uses: ishworkh/docker-image-artifact-download@v1
+      with:
+        image: "prod_image:latest"
+
+    - name: Run it
+      run: docker run --rm prod_image:latest ls

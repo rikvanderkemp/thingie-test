@@ -1,0 +1,19 @@
+---
+name: CI
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged
+
+    name: Build Docker images
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set short commit hash
+      run: echo "SHORT_TAG=${GITHUB_SHA::8}" >> $GITHUB_ENV
